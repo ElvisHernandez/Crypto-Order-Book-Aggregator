@@ -37,7 +37,7 @@ def aggregate_complete_order_book():
     complete_order_book['bids'].sort(key=lambda bid: float(bid['price']), reverse=True)
     complete_order_book['asks'].sort(key=lambda ask: float(ask['price']))
 
-def calculate_price(is_buying, amount = 10):
+def calculate_price(is_buying, amount):
 
     total_price = 0
     total_amount = amount
