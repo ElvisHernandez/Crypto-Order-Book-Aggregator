@@ -56,19 +56,24 @@ def calculate_price(is_buying, amount):
         else:
             return price * total_amount + total_price
 
-try:
 
-    buy_and_sell_amount = float(sys.argv[1])
+def main():
 
-    if (buy_and_sell_amount < 0):
+    try:
+
+        buy_and_sell_amount = float(sys.argv[1])
+
+        if (buy_and_sell_amount < 0):
+            buy_and_sell_amount = 10
+    except:
         buy_and_sell_amount = 10
-except:
-    buy_and_sell_amount = 10
 
-aggregate_complete_order_book()
+    aggregate_complete_order_book()
 
-buying_price = calculate_price(True, buy_and_sell_amount)
-selling_price = calculate_price(False, buy_and_sell_amount)
+    buying_price = calculate_price(True, buy_and_sell_amount)
+    selling_price = calculate_price(False, buy_and_sell_amount)
 
-print ("The buying price for {} BTC is {}".format(buy_and_sell_amount, buying_price))
-print ("The selling price for {} BTC is {}".format(buy_and_sell_amount, selling_price))
+    print ("The buying price for {} BTC is {}".format(buy_and_sell_amount, buying_price))
+    print ("The selling price for {} BTC is {}".format(buy_and_sell_amount, selling_price))
+
+main()
