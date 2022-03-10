@@ -17,7 +17,7 @@ def load_api_data(url):
     json_payload = json.loads(res.data.decode('utf-8'))
     return json_payload
 
-def process_order_book_bids_and_asks(order_book):
+def aggregate_order_book_bids_and_asks(order_book):
     for bid in order_book['bids']:
         complete_order_book['bids'].append({ "price": bid[0], "amount": bid[1] })
 
@@ -29,8 +29,8 @@ def aggregate_complete_order_book():
     coinbase_order_book, gemini_order_book, kraken_order_book = [load_api_data(url) for url in api_urls]
 
     # merge order books
-    process_order_book_bids_and_asks(coinbase_order_book)
-    process_order_book_bids_and_asks(kraken_order_book['result']['XXBTZUSD'])
+    aggregate_order_book_bids_and_asks(coinbase_order_book)
+    aggregate_order_book_bids_and_asks(kraken_order_book['result']['XXBTZUSD'])
     complete_order_book['bids'] = complete_order_book['bids'] + gemini_order_book['bids']
     complete_order_book['asks'] = complete_order_book['asks'] + gemini_order_book['asks']
 
@@ -59,6 +59,9 @@ def calculate_price(is_buying, amount = 10):
 try:
 
     buy_and_sell_amount = float(sys.argv[1])
+
+    if (buy_and_sell_amount < 0):
+        buy_and_sell_amount = 10
 except:
     buy_and_sell_amount = 10
 
